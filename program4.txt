@@ -1,0 +1,22 @@
+Create table customers(id number, name varchar(20), age number, address varchar(20), salary number);
+desc customers;
+
+insert into customers values(101,'Amrit',19, 'Banaswadi',10000);
+insert into customers values(102,'Amrit',20, 'Bhoopasandra',20000);
+Select * from customers;
+
+CREATE OR REPLACE TRIGGER display_salary_change
+BEFORE DELETE OR UPDATE OR INSERT ON customers
+FOR EACH ROW WHEN(NEW.id>0)
+DECLARE sal_diff number;
+BEGIN
+sal_diff := :new.salary - :old.salary ;
+dbms_output.put_line('Old Salary :' || :old.salary);
+dbms_output.put_line('New Salary :' || :new.salary);
+dbms_output.put_line('Salary Difference :' || sal_diff);
+END;
+
+insert into customers values(103,'Aditya',19,'KR Puram',12000);
+update customers set salary = 15000 where id = 103;
+delete from customers where id = 102;
+

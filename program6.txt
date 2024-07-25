@@ -1,0 +1,36 @@
+create table N_RollCall(roll number, name varchar(20));
+
+insert into N_RollCall values(1,'Achuth');
+insert into N_RollCall values(2,'Akash');
+insert into N_RollCall values(3,'Amrit');
+insert into N_RollCall values(4,'Aditya');
+insert into N_RollCall values(5,'Abhishek');
+
+Select * from N_RollCall;
+
+Create table O_RollCall(roll number , name varchar(20));
+
+insert into O_RollCall values(6,'Arjun');
+insert into O_RollCall values(7,'Dhanush');
+insert into O_RollCall values(8,'Chandu');
+insert into O_RollCall values(9,'Deepak');
+insert into O_RollCall values(10,'Chethan');
+
+Select * from O_RollCall;
+
+DECLARE
+CURSOR c1 is SELECT * FROM O_RollCall; 
+roll_no number; counter number(10);
+BEGIN
+Counter := 0;
+FOR c1_rec IN c1 LOOP
+select count(*) into roll_no from N_RollCall
+where roll = c1_rec.roll;
+if roll_no = 0 then
+INSERT INTO N_RollCall values(c1_rec.roll,c1_rec.name);
+counter := counter + 1;
+end if;
+END LOOP;
+COMMIT;
+DBMS_OUTPUT.PUT_LINE('Number of Rows Inserted : ' || counter);
+END;

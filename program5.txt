@@ -1,0 +1,28 @@
+Create table employee5(e_id number(10), e_name varchar2(30), age number(10), salary number(10));
+desc employee5;
+
+insert into employee5 values(101,'Amrit',19,10000);
+insert into employee5 values(102,'Akash',20,20000);
+insert into employee5 values(103,'Achuth',20,25000);
+insert into employee5 values(104,'Aditya',20,15000);
+insert into employee5 values(105,'Arjun',20,30000);
+Select * from employee5;
+
+DECLARE CURSOR emp_cursor is 
+SELECT e_id, e_name, age, salary
+FROM employee5;
+v_e_id NUMBER; v_e_name VARCHAR2(20);
+v_age NUMBER; v_salary NUMBER;
+
+BEGIN
+OPEN emp_cursor;
+LOOP
+FETCH emp_cursor into v_e_id, v_e_name, v_age, v_salary;
+EXIT WHEN emp_cursor%NOTFOUND;
+DBMS_OUTPUT.PUT_LINE('Employee ID : ' || v_e_id);
+DBMS_OUTPUT.PUT_LINE('Employee Name : ' || v_e_name);
+DBMS_OUTPUT.PUT_LINE('Employee Age : ' || v_age);
+DBMS_OUTPUT.PUT_LINE('Employee Salary : ' || v_salary);
+END LOOP;
+CLOSE emp_cursor;
+END;
